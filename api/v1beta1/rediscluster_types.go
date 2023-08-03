@@ -30,10 +30,13 @@ type RedisClusterSpec struct {
 	// +kubebuilder:default:={livenessProbe:{initialDelaySeconds: 1, timeoutSeconds: 1, periodSeconds: 10, successThreshold: 1, failureThreshold:3}, readinessProbe:{initialDelaySeconds: 1, timeoutSeconds: 1, periodSeconds: 10, successThreshold: 1, failureThreshold:3}}
 	RedisLeader RedisLeader `json:"redisLeader,omitempty"`
 	// +kubebuilder:default:={livenessProbe:{initialDelaySeconds: 1, timeoutSeconds: 1, periodSeconds: 10, successThreshold: 1, failureThreshold:3}, readinessProbe:{initialDelaySeconds: 1, timeoutSeconds: 1, periodSeconds: 10, successThreshold: 1, failureThreshold:3}}
-	RedisFollower      RedisFollower                `json:"redisFollower,omitempty"`
-	RedisExporter      *RedisExporter               `json:"redisExporter,omitempty"`
-	Storage            *ClusterStorage              `json:"storage,omitempty"`
-	PodSecurityContext *corev1.PodSecurityContext   `json:"podSecurityContext,omitempty"`
+	RedisFollower RedisFollower   `json:"redisFollower,omitempty"`
+	RedisExporter *RedisExporter  `json:"redisExporter,omitempty"`
+	Storage       *ClusterStorage `json:"storage,omitempty"`
+	// +kubebuilder:validation:Optional
+	PodSecurityContext *corev1.PodSecurityContext `json:"podSecurityContext,omitempty"`
+	// +kubebuilder:validation:Optional
+	SecurityContext    *corev1.PodSecurityContext   `json:"securityContext,omitempty"`
 	PriorityClassName  string                       `json:"priorityClassName,omitempty"`
 	Resources          *corev1.ResourceRequirements `json:"resources,omitempty"`
 	TLS                *TLSConfig                   `json:"TLS,omitempty"`

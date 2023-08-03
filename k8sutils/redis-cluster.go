@@ -26,12 +26,16 @@ type RedisClusterService struct {
 
 // generateRedisClusterParams generates Redis cluster information
 func generateRedisClusterParams(cr *redisv1beta1.RedisCluster, replicas int32, externalConfig *string, params RedisClusterSTS) statefulSetParameters {
+	podSecurity := cr.Spec.PodSecurityContext
+	if podSecurity == nil {
+		podSecurity = cr.Spec.SecurityContext
+	}
 	res := statefulSetParameters{
 		Metadata:                      cr.ObjectMeta,
 		Replicas:                      &replicas,
 		ClusterMode:                   true,
 		NodeSelector:                  params.NodeSelector,
-		PodSecurityContext:            cr.Spec.PodSecurityContext,
+		PodSecurityContext:            podSecurity,
 		PriorityClassName:             cr.Spec.PriorityClassName,
 		Affinity:                      params.Affinity,
 		TerminationGracePeriodSeconds: params.TerminationGracePeriodSeconds,
